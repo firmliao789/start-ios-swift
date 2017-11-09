@@ -77,10 +77,10 @@ import UIKit
             button.setImage(highlightedStar, for: [.highlighted,.selected])
             
             
-            button.backgroundColor=UIColor.red
+//            button.backgroundColor=UIColor.red
             button.translatesAutoresizingMaskIntoConstraints=false
-            button.heightAnchor.constraint(equalToConstant:startSize.height).isActive=false
-            button.widthAnchor.constraint(equalToConstant:startSize.width).isActive=false
+            button.heightAnchor.constraint(equalToConstant:startSize.height).isActive=true
+            button.widthAnchor.constraint(equalToConstant:startSize.width).isActive=true
             
             button.addTarget(self, action: #selector(RatingControl.ratingButtonTapped(button:)), for: .touchUpInside)
             
