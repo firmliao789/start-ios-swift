@@ -17,6 +17,9 @@ class ViewController: UIViewController,UITextFieldDelegate,UIImagePickerControll
 
     @IBOutlet weak var photoImageView: UIImageView!
     
+    @IBOutlet weak var ratingControl: RatingControl!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
        // Handle the text field’s user input through delegate callbacks.    
@@ -72,9 +75,9 @@ class ViewController: UIViewController,UITextFieldDelegate,UIImagePickerControll
         dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func setDefaultLabelText(_ sender: UIButton) {
-        nameTextField.text="Default text"
-    }
+//    @IBAction func setDefaultLabelText(_ sender: UIButton) {
+//        nameTextField.text="Default text"
+//    }
 
 }
 
