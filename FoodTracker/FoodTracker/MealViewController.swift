@@ -7,8 +7,12 @@
 //
 
 import UIKit
+import os.log
 
 class MealViewController: UIViewController,UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
+    
+    var meal:Meal?
+
     
     //MARK Properties
     @IBOutlet weak var nameTextField: UITextField!
@@ -17,11 +21,21 @@ class MealViewController: UIViewController,UITextFieldDelegate,UIImagePickerCont
     
     @IBOutlet weak var ratingControl: RatingControl!
     
+    @IBOutlet weak var saveButton: UIBarButtonItem!
+    
+    
+
+    @IBAction func cancel(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+        
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
        // Handle the text field’s user input through delegate callbacks.    
         nameTextField.delegate=self
+        updateSvaeButtonState()
     }
     
     //MARK UITextFieldDelegate
@@ -32,6 +46,34 @@ class MealViewController: UIViewController,UITextFieldDelegate,UIImagePickerCont
         return true
     }
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
+        updateSvaeButtonState()
+        navigationItem.title=textField.text
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        saveButton.isEnabled=false
+    }
+    
+    //MARK Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        super.prepare(for: segue, sender: sender)
+        
+        guard let button = sender as? UIBarButtonItem,button===saveButton else {
+            os_log("保存按钮没有被按下", log:OSLog.default,type:.debug)
+            return
+        }
+        
+        let name=nameTextField.text ?? ""
+        
+        let photo = photoImageView.image
+        
+        let rating=ratingControl.rating
+        
+        meal=Meal(name:name,photo:photo!,rating:rating)
+        
+        
+        
     }
     
     
@@ -72,9 +114,11 @@ class MealViewController: UIViewController,UITextFieldDelegate,UIImagePickerCont
         dismiss(animated: true, completion: nil)
     }
     
-//    @IBAction func setDefaultLabelText(_ sender: UIButton) {
-//        nameTextField.text="Default text"
-//    }
+    //MARK private Methods
+    private func updateSvaeButtonState(){
+        let text=nameTextField.text ?? ""
+        saveButton.isEnabled = !text.isEmpty
+    }
 
 }
 
